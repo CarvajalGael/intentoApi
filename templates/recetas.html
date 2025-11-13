@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Recetas Saludables - Aurora Health{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+  <div class="row align-items-center">
+    <!-- Descripción principal -->
+    <div class="col-md-6">
+      <h1><i>Recetas Saludables</i></h1>
+      <p class="mt-3">
+        Explora una variedad de recetas diseñadas para ayudarte a mantener una dieta saludable y equilibrada. Aquí encontrarás opciones veganas, sin gluten y más, todas con información nutricional detallada para que puedas tomar decisiones informadas sobre tu alimentación.
+      </p>
+      <p>
+        Filtra las recetas según tus preferencias de dieta, tiempo de preparación y contenido calórico, y empieza a cocinar de forma más saludable.
+      </p>
+    </div>
+
+    <!-- Imagen ilustrativa -->
+    <div class="col-md-6 text-center">
+      <img
+        src="{{ url_for('static', filename='img/nutricion1.jpeg') }}"
+        alt="Nutrición saludable"
+        class="rounded shadow-sm"
+        style="width: 500px; height: auto"
+      />
+    </div>
+  </div>
+
+  <!-- Formulario de filtros -->
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <h3>Filtrar Recetas</h3>
+      <form method="POST">
+        <label for="dieta">Tipo de Dieta:</label>
+        <select name="dieta" id="dieta">
+          <option value="vegan">Vegano</option>
+          <option value="glutenFree">Sin Gluten</option>
+          <option value="vegetarian">Vegetariano</option>
+        </select>
+
+        <label for="max_tiempo">Tiempo máximo (minutos):</label>
+        <input type="number" name="max_tiempo" id="max_tiempo" placeholder="30">
+
+        <label for="calorias_min">Calorías mínimas:</label>
+        <input type="number" name="calorias_min" id="calorias_min" placeholder="200">
+
+        <label for="calorias_max">Calorías máximas:</label>
+        <input type="number" name="calorias_max" id="calorias_max" placeholder="500">
+
+        <button type="submit">Buscar Recetas</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Mostrar las recetas obtenidas -->
+  <div class="row mt-5">
+    <h3>Recetas Encontradas</h3>
+    {% if recetas %}
+      {% for receta in recetas %}
+        <div class="col-md-4">
+          <div class="receta-card card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">{{ receta['title'] }}</h5>
+              <p class="card-text"><strong>Calorías por porción:</strong> {{ receta['nutrition']['nutrients'][0]['amount'] }} kcal</p>
+              <p class="card-text"><strong>Tiempo de preparación:</strong> {{ receta['readyInMinutes'] }} minutos</p>
+              <a href="https://spoonacular.com/recipes/{{ receta['id'] }}" target="_blank" class="btn btn-primary">Ver receta completa</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="col-md-12">
+        <p>No se encontraron recetas según los criterios especificados.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
