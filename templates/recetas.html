@@ -25,7 +25,6 @@
     </div>
   </div>
 
-
   <div class="row mt-4">
     <div class="col-md-12">
       <h3>Filtrar Recetas</h3>
@@ -57,11 +56,25 @@
       {% for receta in recetas %}
         <div class="col-md-4">
           <div class="receta-card card mb-4">
+
+            <img 
+              src="{{ receta['image'] }}" 
+              alt="{{ receta['title'] }}" 
+              class="card-img-top"
+              style="height: 200px; object-fit: cover;"
+            />
+
             <div class="card-body">
               <h5 class="card-title">{{ receta['title'] }}</h5>
-              <p class="card-text"><strong>Calorías por porción:</strong> {{ receta['nutrition']['nutrients'][0]['amount'] }} kcal</p>
-              <p class="card-text"><strong>Tiempo de preparación:</strong> {{ receta['readyInMinutes'] }} minutos</p>
-              <a href="https://spoonacular.com/recipes/{{ receta['id'] }}" target="_blank" class="btn btn-primary">Ver receta completa</a>
+              <p class="card-text">
+                <strong>Calorías por porción:</strong> {{ receta['nutrition']['nutrients'][0]['amount'] }} kcal
+              </p>
+              <p class="card-text">
+                <strong>Tiempo de preparación:</strong> {{ receta['readyInMinutes'] }} minutos
+              </p>
+              <a href="https://spoonacular.com/recipes/{{ receta['id'] }}" target="_blank" class="btn btn-primary">
+                Ver receta completa
+              </a>
             </div>
           </div>
         </div>
